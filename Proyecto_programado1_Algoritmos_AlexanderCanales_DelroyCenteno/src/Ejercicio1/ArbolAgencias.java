@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+
+
 class NodoA {
 
 	Agencia agencia;
@@ -61,7 +63,7 @@ public class ArbolAgencias {
 	 * @param canton - String canton
 	 * @return
 	 */
-	public String verificarInsercion(int codigo) {
+	public String verificarInsercion(int codigo, String canton) {
 
 		String provincia = "";
 		String re = "";
@@ -92,13 +94,13 @@ public class ArbolAgencias {
 		do {
 			cp = Integer.parseInt(JOptionPane
 					.showInputDialog("Ingrese la cantidad de la planilla:"));
-			if (cp > 25 && cp < 200)
+			if (cp >24 && cp < 201)
 				break;
-			JOptionPane.showMessageDialog(null, "El numero minimo de empleados debe de ser 25.");
+			JOptionPane.showMessageDialog(null, "EL numero minimo de Planilla debe ser de 25 y maximo 200");
 		} while (true);
 
 		NodoA nuevoNodo = new NodoA();
-		Agencia nuevaAgencia = new Agencia(codigo, provincia, cp);
+		Agencia nuevaAgencia = new Agencia(codigo, provincia, canton, cp);
 		nuevoNodo.derecho = null;
 		nuevoNodo.izquierdo = null;
 		nuevoNodo.agencia = nuevaAgencia;
@@ -110,7 +112,9 @@ public class ArbolAgencias {
 	/**
 	 * Inserta un nodo. Es un metodo recursivo.
 	 * Se busca un nodo a la izquierda o derecha dependiendo de la condicio
-
+	 * @param nodo - Nodo a insertar
+	 * @param padre - Nodo padre
+	 * @return
 	 */
 	public String insertar(NodoA nodo, NodoA padre) {
 
@@ -203,8 +207,8 @@ public class ArbolAgencias {
 	private void listarPreOrden(NodoA reco) {
 		if (reco != null) {
 			recorrido.add("\n" + reco.agencia.codigo + "\t"
-					+ reco.agencia.provincia + "\t" 
-					+ "\t" + reco.agencia.cantidadEmpleadosIngresados + "\t"
+					+ reco.agencia.provincia + "\t" + reco.agencia.canton
+					+ "\t" + reco.agencia.cantidadPlanilla + "\t"
 					+ reco.agencia.cantidadEmpleadosIngresados);
 			listarPreOrden(reco.izquierdo);
 			listarPreOrden(reco.derecho);
@@ -227,7 +231,8 @@ public class ArbolAgencias {
 		if (reco != null) {
 			listarEnOrden(reco.izquierdo);
 			recorrido.add("\n" + reco.agencia.codigo + "\t"
-					+ reco.agencia.provincia + "\t" + reco.agencia.cantidadPlanilla + "\t"
+					+ reco.agencia.provincia + "\t" + reco.agencia.canton
+					+ "\t" + reco.agencia.cantidadPlanilla + "\t"
 					+ reco.agencia.cantidadEmpleadosIngresados);
 			listarEnOrden(reco.derecho);
 		}
@@ -250,7 +255,8 @@ public class ArbolAgencias {
 			listarPostOrden(reco.izquierdo);
 			listarPostOrden(reco.derecho);
 			recorrido.add("\n" + reco.agencia.codigo + "\t"
-					+ reco.agencia.provincia + "\t" + reco.agencia.cantidadPlanilla + "\t"
+					+ reco.agencia.provincia + "\t" + reco.agencia.canton
+					+ "\t" + reco.agencia.cantidadPlanilla + "\t"
 					+ reco.agencia.cantidadEmpleadosIngresados);
 		}
 	}
@@ -303,9 +309,10 @@ public class ArbolAgencias {
 				r = "Se ha encontrado!";
 				r += "\n\nC.d.P : Cantidad de planilla"
 						+ "\nC.d.E: Cantidad de empleados ingresados"
-						+ "\nCodigo:\tProvincia:\tC.d.P\tC.d.E";
+						+ "\nCodigo:\tProvincia:\tCanton:\tC.d.P\tC.d.E";
 				r += "\n" + actual.agencia.codigo + "\t"
-						+ actual.agencia.provincia +"\t"
+						+ actual.agencia.provincia + "\t"
+						+ actual.agencia.canton + "\t"
 						+ actual.agencia.cantidadPlanilla + "\t"
 						+ actual.agencia.cantidadEmpleadosIngresados;
 			} else {
@@ -491,6 +498,7 @@ public class ArbolAgencias {
 			r += "\nC.d.E: Cantidad de empleados agregados";
 			r += "\n\nAgencia codigo:\t" + actual.agencia.codigo;
 			r += "\nProvincia:\t" + actual.agencia.provincia;
+			r += "\nCanton:\t" + actual.agencia.canton;
 			r += "\nC.d.P:\t" + actual.agencia.cantidadPlanilla;
 			r += "\nC.d.E:\t" + actual.agencia.cantidadEmpleadosIngresados;
 			r += actual.agencia.arbolEmpleados.listarEmpleados();

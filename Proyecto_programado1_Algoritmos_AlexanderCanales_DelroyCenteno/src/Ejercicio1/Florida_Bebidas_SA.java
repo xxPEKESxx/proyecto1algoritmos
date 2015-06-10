@@ -22,6 +22,8 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
+
+
 /**
  * Algoritmos - Tarea Programada 1 - Ejercicio 1
  * @author Rodolfo Sequeira B26375
@@ -49,6 +51,7 @@ public class Florida_Bebidas_SA extends JFrame {
 	ArrayList<Integer> agenciasIngresadas = new ArrayList<Integer>();
 
 	ArbolAgencias arbolAgencias = new ArbolAgencias();
+	private JTextField jtxt_canton;
 	private JTextField jtxt_identificarEmpleado;
 	private JButton jbtn_eliminarEmpleado;
 	private JButton jbtn_agregarEmpleado;
@@ -60,7 +63,7 @@ public class Florida_Bebidas_SA extends JFrame {
 	/**
 	 * Constructor
 	 */
-	public Florida_Bebidas_SA() {
+	public Florida_Bebidas_SA(){
 		setTitle("Florida Bebidas S.A.");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
@@ -158,7 +161,7 @@ public class Florida_Bebidas_SA extends JFrame {
 		jbtn_listar.setEnabled(false);
 		jbtn_listar.setBounds(10, 209, 89, 23);
 		jbtn_listar.addActionListener(new ActionListener() {
-		
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				listarPorOrden();
 			}
@@ -217,12 +220,21 @@ public class Florida_Bebidas_SA extends JFrame {
 		jcbx_agenciasDisponibles = new JComboBox<Integer>();
 		jcbx_agenciasDisponibles.setBounds(140, 11, 120, 20);
 		jpnl_agencias.add(jcbx_agenciasDisponibles);
+
+		jtxt_canton = new JTextField();
+		jtxt_canton.setBounds(270, 11, 106, 20);
+		jpnl_agencias.add(jtxt_canton);
+		jtxt_canton.setColumns(10);
+
+		JLabel label = new JLabel("<< Canton");
+		label.setBounds(386, 14, 90, 14);
+		jpnl_agencias.add(label);
 		
-		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setToolTipText("El numero minimo de empleados debe de ser de 25.");
-		lblNewLabel_1.setIcon(new ImageIcon(Florida_Bebidas_SA.class.getResource("/recursos/icono_informacion.jpg")));
-		lblNewLabel_1.setBounds(279, 14, 21, 14);
-		jpnl_agencias.add(lblNewLabel_1);
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setToolTipText("El numero de empleados debe ser minimo de 25 personas y maximo 200.");
+		lblNewLabel.setIcon(new ImageIcon(Florida_Bebidas_SA.class.getResource("/recursos/icono_informacion.jpg")));
+		lblNewLabel.setBounds(107, 39, 26, 14);
+		jpnl_agencias.add(lblNewLabel);
 
 		JPanel jpnl_empleados = new JPanel();
 		jtpn_tabs.addTab("Empleados", null, jpnl_empleados, null);
@@ -233,7 +245,7 @@ public class Florida_Bebidas_SA extends JFrame {
 				.getBorder("TitledBorder.border"), "Gestion de Empleados",
 				TitledBorder.LEADING, TitledBorder.TOP, null,
 				new Color(0, 0, 0)));
-		jpnl_gestionEmpleados.setBounds(10, 11, 278, 234);
+		jpnl_gestionEmpleados.setBounds(10, 11, 220, 234);
 		jpnl_empleados.add(jpnl_gestionEmpleados);
 		jpnl_gestionEmpleados.setLayout(null);
 
@@ -322,12 +334,6 @@ public class Florida_Bebidas_SA extends JFrame {
 		jcbx_agenciasAgregadasE.setEnabled(false);
 		jcbx_agenciasAgregadasE.setBounds(102, 26, 100, 20);
 		jpnl_gestionEmpleados.add(jcbx_agenciasAgregadasE);
-		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setToolTipText("El identificador debe de ser de tipo entero(numerico).");
-		lblNewLabel.setIcon(new ImageIcon(Florida_Bebidas_SA.class.getResource("/recursos/icono_informacion.jpg")));
-		lblNewLabel.setBounds(222, 59, 22, 14);
-		jpnl_gestionEmpleados.add(lblNewLabel);
 
 		JButton jbtn_faq = new JButton();
 		jbtn_faq.addActionListener(new ActionListener() {
@@ -335,8 +341,9 @@ public class Florida_Bebidas_SA extends JFrame {
 				faq();
 			}
 		});
-		jbtn_faq.setIcon(new ImageIcon(Florida_Bebidas_SA.class.getResource("/recursos/faq.png")));
-		jbtn_faq.setBounds(298, 11, 53, 45);
+		jbtn_faq.setIcon(new ImageIcon(getClass().getResource(
+				"/recursos/faq.png")));
+		jbtn_faq.setBounds(240, 11, 45, 39);
 		jpnl_empleados.add(jbtn_faq);
 
 		initCombos();
@@ -351,10 +358,10 @@ public class Florida_Bebidas_SA extends JFrame {
 	 */
 	public void agregarAgencia() {
 		if (!(jcbx_agenciasDisponibles.getSelectedItem().toString().isEmpty())
-				) {
-			int codigo = (Integer) jcbx_agenciasDisponibles.getSelectedItem();
-			
-			String re = arbolAgencias.verificarInsercion(codigo);
+				&& !(jtxt_canton.getText().isEmpty())) {
+			int codigo = (int) jcbx_agenciasDisponibles.getSelectedItem();
+			String canton = jtxt_canton.getText();
+			String re = arbolAgencias.verificarInsercion(codigo, canton);
 			jtxa_resultados.setText(re);
 
 			for (int x = 0; x < agenciasDisponibles.size(); x++) {
@@ -366,6 +373,8 @@ public class Florida_Bebidas_SA extends JFrame {
 			}
 			activarPaneles();
 			actualizarCombos();
+		}else {
+			JOptionPane.showMessageDialog(null, "estrictamente debe de indicar el canton donde se encuentra la agencia.");
 		}
 	}
 
@@ -384,7 +393,7 @@ public class Florida_Bebidas_SA extends JFrame {
 	 */
 	public void mostrarAgencia() {
 		String re = "";
-		re = arbolAgencias.mostrarAgencia((Integer) jcbx_agenciasAgregadasA
+		re = arbolAgencias.mostrarAgencia((int) jcbx_agenciasAgregadasA
 				.getSelectedItem());
 		jtxa_resultados.setText(re);
 	}
@@ -413,7 +422,7 @@ public class Florida_Bebidas_SA extends JFrame {
 		
 		int i = Integer.parseInt(jtxt_identificarEmpleado.getText());
 		
-		int a = (Integer) jcbx_agenciasAgregadasE.getSelectedItem();
+		int a = (int) jcbx_agenciasAgregadasE.getSelectedItem();
 		String p = (String) jcbx_puestos.getSelectedItem();
 		String s = jtxt_salarioEmpleado.getText();
 		System.out.println(s);
@@ -427,14 +436,14 @@ public class Florida_Bebidas_SA extends JFrame {
 	 */
 	public void buscarEmpleado() {
 		if (!(jtxt_identificarEmpleado.getText().isEmpty())) {
-			int a = (Integer) jcbx_agenciasAgregadasA.getSelectedItem();
+			int a = (int) jcbx_agenciasAgregadasA.getSelectedItem();
 			int i = Integer.parseInt(jtxt_identificarEmpleado.getText());
 			String r = arbolAgencias.buscarEmpleado(a, i);
 			jtxa_resultados.setText(r);
 		} else {
 			String d = JOptionPane
 					.showInputDialog("Ingrese el identificador del empleado");
-			int a = (Integer) jcbx_agenciasAgregadasA.getSelectedItem();
+			int a = (int) jcbx_agenciasAgregadasA.getSelectedItem();
 			String r = arbolAgencias.buscarEmpleado(a, Integer.parseInt(d));
 			jtxa_resultados.setText(r);
 		}
@@ -485,7 +494,7 @@ public class Florida_Bebidas_SA extends JFrame {
 		String re = "\t~ F.A.Q ~" + "\nPrimero se debe de crear una agencia."
 				+ "\npara crearla debe ir a la tabs Agencias."
 				+ "\nLas agencias se agregan simplemente escogiendo"
-				+ "\nsu codigo."
+				+ "\nsu codigo e ingresando su canton."
 				+ "\nLuego de agregar la agencia el codigo desaparece del"
 				+ "\ncombo y se puede seleccionar para realizar las gestiones."
 				+ "\n\nLuego se pueden gestionar las agencias."

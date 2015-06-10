@@ -12,19 +12,20 @@ public class Agencia implements Serializable {
 	
 	// Instancia del arbol de empleados que pertenece a la agencia
 	ArbolEmpleados arbolEmpleados = new ArbolEmpleados();
-	
+
 	int codigo;
-	
+	String canton;
 	String provincia;
 	int cantidadPlanilla;
 	int cantidadEmpleadosIngresados = 0;
-	
-	public Agencia(int codigo, String provincia,  int cantidadEmpleados){
+	public Agencia(int codigo, String provincia, String canton, int cantidadEmpleados){
 		
 		this.provincia = provincia;
+		this.canton = canton;
 		this.codigo = codigo;
 		this.cantidadPlanilla = cantidadEmpleados;
 	}
+	
 	
 	
 }
