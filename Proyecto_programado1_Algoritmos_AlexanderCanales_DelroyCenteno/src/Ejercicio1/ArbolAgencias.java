@@ -61,7 +61,7 @@ public class ArbolAgencias {
 	 * @param canton - String canton
 	 * @return
 	 */
-	public String verificarInsercion(int codigo, String canton) {
+	public String verificarInsercion(int codigo) {
 
 		String provincia = "";
 		String re = "";
@@ -88,16 +88,17 @@ public class ArbolAgencias {
 			provincia = "Puntarenas";
 
 		}
-		int cp = 15;
+		int cp = 25;
 		do {
 			cp = Integer.parseInt(JOptionPane
 					.showInputDialog("Ingrese la cantidad de la planilla:"));
-			if (cp > 14 && cp < 151)
+			if (cp > 25 && cp < 200)
 				break;
+			JOptionPane.showMessageDialog(null, "El numero minimo de empleados debe de ser 25.");
 		} while (true);
 
 		NodoA nuevoNodo = new NodoA();
-		Agencia nuevaAgencia = new Agencia(codigo, provincia, canton, cp);
+		Agencia nuevaAgencia = new Agencia(codigo, provincia, cp);
 		nuevoNodo.derecho = null;
 		nuevoNodo.izquierdo = null;
 		nuevoNodo.agencia = nuevaAgencia;
@@ -109,9 +110,7 @@ public class ArbolAgencias {
 	/**
 	 * Inserta un nodo. Es un metodo recursivo.
 	 * Se busca un nodo a la izquierda o derecha dependiendo de la condicio
-	 * @param nodo - Nodo a insertar
-	 * @param padre - Nodo padre
-	 * @return
+
 	 */
 	public String insertar(NodoA nodo, NodoA padre) {
 
@@ -304,7 +303,7 @@ public class ArbolAgencias {
 				r = "Se ha encontrado!";
 				r += "\n\nC.d.P : Cantidad de planilla"
 						+ "\nC.d.E: Cantidad de empleados ingresados"
-						+ "\nCodigo:\tProvincia:\tCanton:\tC.d.P\tC.d.E";
+						+ "\nCodigo:\tProvincia:\tC.d.P\tC.d.E";
 				r += "\n" + actual.agencia.codigo + "\t"
 						+ actual.agencia.provincia +"\t"
 						+ actual.agencia.cantidadPlanilla + "\t"
@@ -382,7 +381,7 @@ public class ArbolAgencias {
 	public void guardar() {
 
 		JFileChooser chooser = new JFileChooser();
-		fichero = new File("EstrucitmoSA.dat");
+		fichero = new File("Arboles.dat");
 		chooser.setSelectedFile(fichero);
 		int seleccion = chooser.showSaveDialog(null);
 
@@ -492,7 +491,6 @@ public class ArbolAgencias {
 			r += "\nC.d.E: Cantidad de empleados agregados";
 			r += "\n\nAgencia codigo:\t" + actual.agencia.codigo;
 			r += "\nProvincia:\t" + actual.agencia.provincia;
-			r += "\nCanton:\t" + actual.agencia.canton;
 			r += "\nC.d.P:\t" + actual.agencia.cantidadPlanilla;
 			r += "\nC.d.E:\t" + actual.agencia.cantidadEmpleadosIngresados;
 			r += actual.agencia.arbolEmpleados.listarEmpleados();

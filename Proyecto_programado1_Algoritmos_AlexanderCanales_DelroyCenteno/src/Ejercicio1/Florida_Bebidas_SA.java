@@ -49,7 +49,6 @@ public class Florida_Bebidas_SA extends JFrame {
 	ArrayList<Integer> agenciasIngresadas = new ArrayList<Integer>();
 
 	ArbolAgencias arbolAgencias = new ArbolAgencias();
-	private JTextField jtxt_canton;
 	private JTextField jtxt_identificarEmpleado;
 	private JButton jbtn_eliminarEmpleado;
 	private JButton jbtn_agregarEmpleado;
@@ -62,7 +61,7 @@ public class Florida_Bebidas_SA extends JFrame {
 	 * Constructor
 	 */
 	public Florida_Bebidas_SA() {
-		setTitle("Estrucitmo S.A");
+		setTitle("Florida Bebidas S.A.");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 		setSize(1017, 412);
@@ -218,15 +217,12 @@ public class Florida_Bebidas_SA extends JFrame {
 		jcbx_agenciasDisponibles = new JComboBox<Integer>();
 		jcbx_agenciasDisponibles.setBounds(140, 11, 120, 20);
 		jpnl_agencias.add(jcbx_agenciasDisponibles);
-
-		jtxt_canton = new JTextField();
-		jtxt_canton.setBounds(270, 11, 106, 20);
-		jpnl_agencias.add(jtxt_canton);
-		jtxt_canton.setColumns(10);
-
-		JLabel label = new JLabel("<< Canton");
-		label.setBounds(386, 14, 90, 14);
-		jpnl_agencias.add(label);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setToolTipText("El numero minimo de empleados debe de ser de 25.");
+		lblNewLabel_1.setIcon(new ImageIcon(Florida_Bebidas_SA.class.getResource("/recursos/icono_informacion.jpg")));
+		lblNewLabel_1.setBounds(279, 14, 21, 14);
+		jpnl_agencias.add(lblNewLabel_1);
 
 		JPanel jpnl_empleados = new JPanel();
 		jtpn_tabs.addTab("Empleados", null, jpnl_empleados, null);
@@ -237,7 +233,7 @@ public class Florida_Bebidas_SA extends JFrame {
 				.getBorder("TitledBorder.border"), "Gestion de Empleados",
 				TitledBorder.LEADING, TitledBorder.TOP, null,
 				new Color(0, 0, 0)));
-		jpnl_gestionEmpleados.setBounds(10, 11, 220, 234);
+		jpnl_gestionEmpleados.setBounds(10, 11, 278, 234);
 		jpnl_empleados.add(jpnl_gestionEmpleados);
 		jpnl_gestionEmpleados.setLayout(null);
 
@@ -326,6 +322,12 @@ public class Florida_Bebidas_SA extends JFrame {
 		jcbx_agenciasAgregadasE.setEnabled(false);
 		jcbx_agenciasAgregadasE.setBounds(102, 26, 100, 20);
 		jpnl_gestionEmpleados.add(jcbx_agenciasAgregadasE);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setToolTipText("El identificador debe de ser de tipo entero(numerico).");
+		lblNewLabel.setIcon(new ImageIcon(Florida_Bebidas_SA.class.getResource("/recursos/icono_informacion.jpg")));
+		lblNewLabel.setBounds(222, 59, 22, 14);
+		jpnl_gestionEmpleados.add(lblNewLabel);
 
 		JButton jbtn_faq = new JButton();
 		jbtn_faq.addActionListener(new ActionListener() {
@@ -333,9 +335,8 @@ public class Florida_Bebidas_SA extends JFrame {
 				faq();
 			}
 		});
-		jbtn_faq.setIcon(new ImageIcon(getClass().getResource(
-				"/recursos/faq.png")));
-		jbtn_faq.setBounds(240, 11, 45, 39);
+		jbtn_faq.setIcon(new ImageIcon(Florida_Bebidas_SA.class.getResource("/recursos/faq.png")));
+		jbtn_faq.setBounds(298, 11, 53, 45);
 		jpnl_empleados.add(jbtn_faq);
 
 		initCombos();
@@ -350,10 +351,10 @@ public class Florida_Bebidas_SA extends JFrame {
 	 */
 	public void agregarAgencia() {
 		if (!(jcbx_agenciasDisponibles.getSelectedItem().toString().isEmpty())
-				&& !(jtxt_canton.getText().isEmpty())) {
+				) {
 			int codigo = (Integer) jcbx_agenciasDisponibles.getSelectedItem();
-			String canton = jtxt_canton.getText();
-			String re = arbolAgencias.verificarInsercion(codigo, canton);
+			
+			String re = arbolAgencias.verificarInsercion(codigo);
 			jtxa_resultados.setText(re);
 
 			for (int x = 0; x < agenciasDisponibles.size(); x++) {

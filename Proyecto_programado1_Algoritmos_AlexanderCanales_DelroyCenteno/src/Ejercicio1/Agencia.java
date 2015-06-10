@@ -19,7 +19,7 @@ public class Agencia implements Serializable {
 	int cantidadPlanilla;
 	int cantidadEmpleadosIngresados = 0;
 	
-	public Agencia(int codigo, String provincia, String canton, int cantidadEmpleados){
+	public Agencia(int codigo, String provincia,  int cantidadEmpleados){
 		
 		this.provincia = provincia;
 		this.codigo = codigo;
