@@ -1,7 +1,9 @@
 package Ejercicio3;
 
 import java.io.Serializable;
+import java.net.ServerSocket;
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 public class Compras implements Serializable {
 
@@ -38,6 +40,7 @@ public class Compras implements Serializable {
 		cantidadProductos = productos.size();
 		calcular();
 		
+	
 	}
 
 	private void calcular() {

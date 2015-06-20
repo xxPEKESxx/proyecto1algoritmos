@@ -58,6 +58,7 @@ public class XRAY extends JFrame {
 	private JTextArea jtxa_resultadoCompras;
 	private JPanel jpnl_agregarVentas;
 	private JTextField jtxt_descuentoCompra;
+	private JComboBox<String> jcb_tipo;
 
 	public XRAY() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -427,7 +428,7 @@ public class XRAY extends JFrame {
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		jscrl_resultadoCompras
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		jscrl_resultadoCompras.setBounds(288, 46, 348, 245);
+		jscrl_resultadoCompras.setBounds(288, 46, 348, 212);
 		jpnl_compras.add(jscrl_resultadoCompras);
 
 		jtxa_resultadoCompras = new JTextArea();
@@ -436,7 +437,7 @@ public class XRAY extends JFrame {
 		JPanel panel_3 = new JPanel();
 		panel_3.setBorder(new TitledBorder(null, "Opciones",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_3.setBounds(10, 276, 268, 85);
+		panel_3.setBounds(10, 276, 437, 85);
 		jpnl_compras.add(panel_3);
 		panel_3.setLayout(null);
 
@@ -446,7 +447,7 @@ public class XRAY extends JFrame {
 				ordenarCompras();
 			}
 		});
-		jbtn_ordenarCompras.setBounds(10, 24, 89, 23);
+		jbtn_ordenarCompras.setBounds(315, 54, 96, 23);
 		panel_3.add(jbtn_ordenarCompras);
 
 		JButton jbtn_mostrarCompras = new JButton("Mostrar");
@@ -455,7 +456,7 @@ public class XRAY extends JFrame {
 				imprimirCompras();
 			}
 		});
-		jbtn_mostrarCompras.setBounds(109, 24, 89, 23);
+		jbtn_mostrarCompras.setBounds(221, 54, 89, 23);
 		panel_3.add(jbtn_mostrarCompras);
 
 		JButton jbtn_guardarCompras = new JButton("Guardar");
@@ -473,13 +474,23 @@ public class XRAY extends JFrame {
 				recuperarCompras();
 			}
 		});
-		jbtn_recuperarCompras.setBounds(109, 54, 118, 23);
+		jbtn_recuperarCompras.setBounds(101, 54, 118, 23);
 		panel_3.add(jbtn_recuperarCompras);
+		
+		JLabel lblTiposDeOrdenamiento = new JLabel("TIPOS DE ORDENAMIENTO:");
+		lblTiposDeOrdenamiento.setBounds(10, 22, 183, 14);
+		panel_3.add(lblTiposDeOrdenamiento);
+		
+		jcb_tipo = new JComboBox<String>();
+		jcb_tipo.setBounds(219, 19, 153, 20);
+		jcb_tipo.addItem("Inserción directa");
+		jcb_tipo.addItem("Shell");
+		panel_3.add(jcb_tipo);
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "Mezclar Listas",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(311, 302, 217, 59);
+		panel_1.setBounds(457, 301, 179, 59);
 		jpnl_compras.add(panel_1);
 
 		JButton jbtn_mezclarComprasVentas = new JButton("Mezclar");
