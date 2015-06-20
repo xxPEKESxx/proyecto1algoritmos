@@ -444,7 +444,15 @@ public class XRAY extends JFrame {
 		JButton jbtn_ordenarCompras = new JButton("Odenar");
 		jbtn_ordenarCompras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ordenarCompras();
+				
+				if (jcb_tipo.getSelectedItem().equals("Inserción directa")) {
+					ordenarComprasinserciondirecta();
+				}if (jcb_tipo.getSelectedItem().equals("Shell")) {
+					ordenarComprasShell();
+				} else {
+
+				}
+				
 			}
 		});
 		jbtn_ordenarCompras.setBounds(315, 54, 96, 23);
@@ -615,6 +623,7 @@ public class XRAY extends JFrame {
 	/**
 	 * Imprimi las ventas en el area de texto
 	 */
+	
 	private void imprimirVentas() {
 
 		String re = "";
@@ -798,12 +807,18 @@ public class XRAY extends JFrame {
 	/**
 	 * Se ordenan las compras por el metodo de insercion directa
 	 */
-	private void ordenarCompras() {
+	private void ordenarComprasinserciondirecta() {
 		listaCompras = InsercionDirecta.insercionDirecta(listaCompras);
 		comprasOrdenadas = true;
 		JOptionPane.showMessageDialog(null, "Compras ordenadas con exito");
 	}
 
+	private void ordenarComprasShell(){
+		listaCompras=Shell.shell(listaCompras);
+		comprasOrdenadas = true;
+		JOptionPane.showMessageDialog(null, "Compras ordenadas con exito");
+		
+	}
 	/**
 	 * Se imprimen las compras en el area de texto
 	 */
