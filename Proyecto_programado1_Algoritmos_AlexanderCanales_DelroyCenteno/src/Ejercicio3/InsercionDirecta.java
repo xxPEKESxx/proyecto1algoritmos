@@ -21,7 +21,7 @@ public class InsercionDirecta {
 			Compras co = c.get(x);
 			int j = x - 1;
 
-			while (j >= 0 && c.get(j).numeroFactura > co.numeroFactura) {
+			while (j >= 0 && c.get(j).precioTotalSinDescuento > co.precioTotalSinDescuento) {
 
 				c.set(j + 1, c.get(j));
 				j--;

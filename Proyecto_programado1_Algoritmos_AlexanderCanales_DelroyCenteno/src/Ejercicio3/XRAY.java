@@ -54,7 +54,7 @@ public class XRAY extends JFrame {
 	private JTextField jtxt_nombreCompra;
 	private JTextField jtxt_numeroFacturaCompra;
 	private JTextField jtxt_nombreProveedor;
-	private JComboBox<Integer> jcbx_comprasAgregadas;
+	private JComboBox<String> jcbx_comprasAgregadas;
 	private JTextArea jtxa_resultadoCompras;
 	private JPanel jpnl_agregarVentas;
 	private JTextField jtxt_descuentoCompra;
@@ -209,7 +209,7 @@ public class XRAY extends JFrame {
 		jpnl_agregarVentas = new JPanel();
 		jpnl_agregarVentas.setBorder(new TitledBorder(null, "Agregar Venta",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		jpnl_agregarVentas.setBounds(10, 48, 274, 186);
+		jpnl_agregarVentas.setBounds(10, 48, 246, 186);
 		jpnl_ventas.add(jpnl_agregarVentas);
 		jpnl_agregarVentas.setLayout(null);
 
@@ -326,7 +326,7 @@ public class XRAY extends JFrame {
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		jscrl_resultadoVentas
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		jscrl_resultadoVentas.setBounds(310, 36, 326, 253);
+		jscrl_resultadoVentas.setBounds(266, 36, 370, 253);
 		jpnl_ventas.add(jscrl_resultadoVentas);
 
 		jtxa_resultadoVentas = new JTextArea();
@@ -339,7 +339,7 @@ public class XRAY extends JFrame {
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(null, "Agregar Compra",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_2.setBounds(10, 52, 268, 219);
+		panel_2.setBounds(10, 52, 243, 219);
 		jpnl_compras.add(panel_2);
 		panel_2.setLayout(null);
 
@@ -370,8 +370,8 @@ public class XRAY extends JFrame {
 		panel_2.add(jtxt_cedula);
 		jtxt_cedula.setColumns(10);
 
-		JLabel lblNombre_2 = new JLabel("Nombre");
-		lblNombre_2.setBounds(10, 93, 93, 14);
+		JLabel lblNombre_2 = new JLabel("Encardo de compras");
+		lblNombre_2.setBounds(10, 93, 123, 14);
 		panel_2.add(lblNombre_2);
 
 		jtxt_nombreCompra = new JTextField();
@@ -415,7 +415,7 @@ public class XRAY extends JFrame {
 		jlbl_comprasAgregadas.setBounds(10, 11, 137, 14);
 		jpnl_compras.add(jlbl_comprasAgregadas);
 
-		jcbx_comprasAgregadas = new JComboBox<Integer>();
+		jcbx_comprasAgregadas = new JComboBox<String>();
 		jcbx_comprasAgregadas.setBounds(157, 8, 121, 20);
 		jpnl_compras.add(jcbx_comprasAgregadas);
 
@@ -428,7 +428,7 @@ public class XRAY extends JFrame {
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		jscrl_resultadoCompras
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		jscrl_resultadoCompras.setBounds(288, 46, 348, 212);
+		jscrl_resultadoCompras.setBounds(262, 46, 374, 212);
 		jpnl_compras.add(jscrl_resultadoCompras);
 
 		jtxa_resultadoCompras = new JTextArea();
@@ -447,11 +447,9 @@ public class XRAY extends JFrame {
 				
 				if (jcb_tipo.getSelectedItem().equals("Inserción directa")) {
 					ordenarComprasinserciondirecta();
-				}if (jcb_tipo.getSelectedItem().equals("Shell")) {
-					ordenarComprasShell();
-				} else {
-
 				}
+
+				
 				
 			}
 		});
@@ -492,7 +490,6 @@ public class XRAY extends JFrame {
 		jcb_tipo = new JComboBox<String>();
 		jcb_tipo.setBounds(219, 19, 153, 20);
 		jcb_tipo.addItem("Inserción directa");
-		jcb_tipo.addItem("Shell");
 		panel_3.add(jcb_tipo);
 
 		JPanel panel_1 = new JPanel();
@@ -541,14 +538,11 @@ public class XRAY extends JFrame {
 	 * Imprime los productos en el area de texto
 	 */
 	private void imprimirProductos() {
-		String re = "";
+		String re = "\nCODIGO	"+"NOMBRE	"+"PRECIO UNI	"+"CANTIDAD";
 		for (Producto producto : listaProductos) {
 
-			re += "\nCodigo:\t" + producto.codigo;
-			re += "\nNombre:\t" + producto.nombre;
-			re += "\nPrecio:\t" + producto.precioUnitario;
-			re += "\nCantidad:\t" + producto.cantidadTotal;
-			re += "\n ***************************";
+			re += "\n"+ producto.codigo+"\t" + producto.nombre+"\t" + producto.precioUnitario+"\t" + producto.cantidadTotal+
+					"\n";
 		}
 		jtxa_resultadoProductos.setText(re);
 	}
@@ -615,9 +609,10 @@ public class XRAY extends JFrame {
 	 * Ordena las ventas con el metodo de seleccion
 	 */
 	private void ordenarVentas() {
-		listaVentas = Seleccion.seleccion(listaVentas);
-		ventasOrdenadas = true;
-		JOptionPane.showMessageDialog(null, "Ventas ordenadas con exito");
+		listaVentas=Shell.shell(listaVentas);
+		comprasOrdenadas = true;
+		JOptionPane.showMessageDialog(null, "Compras ordenadas con exito");
+		
 	}
 
 	/**
@@ -627,6 +622,7 @@ public class XRAY extends JFrame {
 	private void imprimirVentas() {
 
 		String re = "";
+		String ver="\nCODIGO	"+"NOMBRE	"+"PRECIO UNI	"+"CANTIDAD";
 		for (Ventas venta : listaVentas) {
 
 			re += "\nFactura:\t" + venta.numeroFactura;
@@ -639,19 +635,17 @@ public class XRAY extends JFrame {
 
 			re += "\n ** Productos **";
 			System.out.println(venta.productos.size());
-			for (Producto p : venta.productos) {
+			for (Producto producto : venta.productos) {
 				System.out.println("Entramos al for");
-				re += "\n   Codigo\t" + p.codigo;
-				re += "\n   Nombre\t" + p.nombre;
-				re += "\n   Precio\t" + p.precioUnitario;
-				re += "\n   Cantidad\t" + p.cantidadTotal + "\n";
+				ver +="\n"+ producto.codigo+"\t" + producto.nombre+"\t" + producto.precioUnitario+"\t" + producto.cantidadTotal+
+						"\n";
 			}
 
 			re += "\n ***************************";
 
 		}
 
-		jtxa_resultadoVentas.setText(re);
+		jtxa_resultadoVentas.setText(re+"\n"+ver);
 
 	}
 
@@ -745,7 +739,7 @@ public class XRAY extends JFrame {
 	 */
 	private void agregarCompra() {
 
-		int factura = Integer.parseInt(jtxt_numeroFacturaCompra.getText());
+		String factura = jtxt_numeroFacturaCompra.getText();
 		String nombreProveedor = jtxt_nombreProveedor.getText();
 		String cedula = jtxt_cedula.getText();
 		String nombre = jtxt_nombreCompra.getText();
@@ -813,12 +807,7 @@ public class XRAY extends JFrame {
 		JOptionPane.showMessageDialog(null, "Compras ordenadas con exito");
 	}
 
-	private void ordenarComprasShell(){
-		listaCompras=Shell.shell(listaCompras);
-		comprasOrdenadas = true;
-		JOptionPane.showMessageDialog(null, "Compras ordenadas con exito");
-		
-	}
+
 	/**
 	 * Se imprimen las compras en el area de texto
 	 */

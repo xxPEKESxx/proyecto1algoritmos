@@ -17,7 +17,7 @@ public class Ventas implements Serializable {
 	int cantidadProductos;
 
 	double totalSinIVA;
-	double montoIVA = 15;
+	double montoIVA = 13;
 	double totalConIVA;
 
 	ArrayList<Producto> productos;

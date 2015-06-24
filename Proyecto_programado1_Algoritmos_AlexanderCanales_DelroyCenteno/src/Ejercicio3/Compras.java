@@ -12,7 +12,7 @@ public class Compras implements Serializable {
 	 */
 	private static final long serialVersionUID = -4916343553235328518L;
 
-	int numeroFactura;
+	String numeroFactura;
 
 	String nombreProveedor;
 	String cedulaJuridica;
@@ -29,7 +29,7 @@ public class Compras implements Serializable {
 
 	ArrayList<Producto> productos = new ArrayList<Producto>();
 
-	public Compras(int factura, String proveedor, String cedula, String nombre,
+	public Compras(String factura, String proveedor, String cedula, String nombre,
 			double descuento, ArrayList<Producto> productos) {
 		numeroFactura = factura;
 		nombreProveedor = proveedor;

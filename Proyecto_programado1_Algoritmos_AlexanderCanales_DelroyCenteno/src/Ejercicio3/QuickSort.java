@@ -36,12 +36,12 @@ public class QuickSort {
 
 			while (izq != der) {
 
-				while (pro.get(der).codigo >= pro.get(pivote).codigo
+				while (pro.get(der).cantidadTotal >= pro.get(pivote).cantidadTotal
 						&& izq < der) {
 					der--;
 					comparaciones++;
 				}
-				while (pro.get(izq).codigo < pro.get(pivote).codigo
+				while (pro.get(izq).cantidadTotal < pro.get(pivote).cantidadTotal
 						&& izq < der) {
 					izq++;
 					comparaciones++;
