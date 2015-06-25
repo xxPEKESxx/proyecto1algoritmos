@@ -41,7 +41,7 @@ public class Mezcla {
 		for (int x = 0; x < compras.size(); x++)
 			if (compras.get(x) instanceof Compras) {
 				c = (Compras) compras.get(x);
-				facturas[x] = c.numeroFactura;
+				facturas[x] = (int) c.precioTotalSinDescuento;
 
 			} else if (compras.get(x) instanceof Ventas) {
 				v = (Ventas) compras.get(x);
@@ -65,7 +65,7 @@ public class Mezcla {
 			for (int y = 0; y < lista.size(); y++) {
 				if (lista.get(y) instanceof Compras) {
 					c = (Compras) lista.get(y);
-					if (c.numeroFactura == facturas[pos]) {
+					if (c.precioTotalSinDescuento == facturas[pos]) {
 						ordenadas.add(lista.get(y));
 						break;
 					}
