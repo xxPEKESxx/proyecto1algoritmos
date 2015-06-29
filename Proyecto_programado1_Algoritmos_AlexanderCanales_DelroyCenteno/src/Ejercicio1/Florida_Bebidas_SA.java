@@ -24,12 +24,7 @@ import javax.swing.border.TitledBorder;
 
 
 
-/**
- * Algoritmos - Tarea Programada 1 - Ejercicio 1
- * @author Rodolfo Sequeira B26375
- * @author Alexander Canales B11428
- * I semestre - 2014
- */
+
 public class Florida_Bebidas_SA extends JFrame {
 
 	/**
@@ -411,7 +406,12 @@ public class Florida_Bebidas_SA extends JFrame {
 	 * Elimina una agencia
 	 */
 	public void eliminar() {
-		JOptionPane.showMessageDialog(this, "No fuciona este boton.");
+		
+		int codigo =(int) jcbx_agenciasAgregadasA.getSelectedItem();
+		arbolAgencias.elimina(codigo);
+		
+		JOptionPane.showMessageDialog(null, "Eliminado con exito!!!");
+		
 	}
 
 	/**

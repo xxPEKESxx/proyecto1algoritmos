@@ -1,5 +1,6 @@
 package Ejercicio1;
 
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -24,6 +25,16 @@ class NodoA {
 		izquierdo = null;
 		derecho = null;
 	}
+	
+	public boolean NodoHoja()
+	  {
+		 if(this.derecho == null && this.izquierdo == null) 
+		 {
+			 
+			return true; 
+		 }
+		 else return false; 
+	  }  
 
 }
 
@@ -380,7 +391,194 @@ public class ArbolAgencias {
 	}
 
 	// ********************************
+	public void elimina( int borrar){
+		NodoA padre = raiz;
+		NodoA actual = raiz;
+		boolean detiene = false;
+		
+	if(raiz.agencia.codigo == borrar && raiz.derecho==null && raiz.izquierdo==null){
+			 raiz=null;
+			 JOptionPane.showMessageDialog(null,"Registro Eliminado ");		 			  
+			  detiene=true;		 
+		   }
+	
+	else if(raiz.agencia.codigo == borrar && raiz.izquierdo!=null && raiz.derecho!=null){
+	        	  raiz=raiz.derecho; 
+	            }
+   
+	else if(raiz.agencia.codigo == borrar && raiz.izquierdo!=null && raiz.derecho!=null){
+		        	  raiz=raiz.izquierdo; 
+		            }  	   
+	
+	else	if( raiz.agencia.codigo == borrar && raiz.derecho!=null && raiz.derecho!=null){//xx
+			   
+	if( raiz.derecho.NodoHoja() && raiz.izquierdo.NodoHoja() ){
+			        	   raiz.derecho.izquierdo = raiz.izquierdo;
+			        	   raiz=raiz.derecho;
+			        	   listarPostOrden();
+	}
+			           
+	else {//jj
+		JOptionPane.showMessageDialog(null," Antes de ciclo");   
+	   		NodoA temporal=raiz.izquierdo;					
+	   		NodoA BuscaExtremo=raiz.derecho;
+	   		NodoA FuturaRaiz = raiz.derecho;
+	
+	   //	padre.derecha=actual.izquierda;
+	   	while(BuscaExtremo.izquierdo!=null){ //whileb 
+	   		
+	   		BuscaExtremo=BuscaExtremo.izquierdo;  
+			JOptionPane.showMessageDialog(null,"Buscando Extremo izquierdo de Raiz Derecho");
+			} //whileb 
+			
+                  BuscaExtremo.izquierdo=temporal;
+				   raiz=null;
+				   raiz=FuturaRaiz;											
+				detiene = true;	
+	   }//jj	
+	
+      }//xx
+		           
+		   
+	while (detiene != true){///Whilerr
+		
+		JOptionPane.showMessageDialog(null,"ciclo");
+		   				
+	 if( actual.derecho!=null&& actual.izquierdo!=null){ 
+		 
+		 JOptionPane.showMessageDialog(null, "Lo sentimos , El registro que Desea borrar No existe" ) ;	 
+	 }
+		   				
+	if(borrar > actual.agencia.codigo && actual.derecho!=null){
+		    padre=actual;
+		    actual=actual.derecho;
+		}
+		    	          
+	if( borrar < actual.agencia.codigo && actual.izquierdo!=null) {
+		    padre=actual;
+		    actual=actual.izquierdo;
+		}
+	
+	if(borrar == actual.agencia.codigo) {
+	 Borra(actual,padre);
+	 JOptionPane.showMessageDialog(null,"Entro");
+	 detiene=true;
+	}
+	}///Whilerr
+		     
 
+		
+}//// borrar
+	
+	
+	public boolean Borra(NodoA actual, NodoA padre){
+		
+		if (actual == padre.izquierdo){  // CUANDO VA BORRAR EL LADO IZQUIERDO
+		
+		if(actual.derecho==null && actual.izquierdo==null  ){//gg
+		          if(padre.izquierdo == actual){
+				 			padre.izquierdo=null; 
+				 			actual=null;
+				 
+				 			return true;
+				 		}
+		          
+		          if (padre.derecho == actual){
+					 	    padre.derecho =null; 
+					 	    actual=null;
+					 
+					 			return true;
+					 	}
+		}//gg
+			
+		if(actual.derecho==null && actual.izquierdo==null ){//hh
+					  
+						padre.izquierdo=actual.izquierdo;  
+						actual = null;
+					
+						return true;
+			}//hh
+					 
+		if(actual.izquierdo==null && actual.derecho==null){//kk
+						 
+						 padre.izquierdo =actual.derecho;
+						 actual=null;
+						 
+						 return true;
+			}//kk
+					
+			if(actual.derecho!=null && actual.izquierdo!=null){//nn
+						NodoA temporal=actual.izquierdo;					
+						NodoA BuscaExtremo=actual.derecho;
+						
+						padre.izquierdo=actual.derecho;
+			 while(BuscaExtremo.izquierdo!=null){  //wwhile
+				 BuscaExtremo=BuscaExtremo.izquierdo;  
+			    JOptionPane.showMessageDialog(null,"Buscando Extremo Izquierdo del actual derecha");
+						  } //wwhile  
+						   
+			 BuscaExtremo.izquierdo=temporal;
+	         actual=null; 
+			
+	         return true;
+	         
+			}//nn
+			
+	}// CUANDO VA BORRAR EL LADO IZQUIERDO 
+			
+			if(actual == padre.derecho){  // CUANDO VA BORRAR EN EL LADO DERECHO
+				
+				if(actual.derecho==null && actual.izquierdo==null){//oo
+					
+					if(padre.derecho == actual){
+			 			padre.derecho=null; 
+			 			actual=null;
+			 
+			 			return true;
+			 		}
+					
+					if (padre.izquierdo == actual){
+				 			padre.izquierdo =null; 
+				 			actual=null;
+				 
+				 			return true;
+				 }						
+		}//oo
+				
+		if(actual.derecho!=null && actual.izquierdo==null) {
+					  
+						padre.derecho=actual.derecho;  
+						actual = null;
+					
+						return true;
+					 }
+		
+		if(actual.derecho==null && actual.izquierdo!=null){
+							padre.derecho=actual.izquierdo;
+							actual=actual.izquierdo;
+					 }
+					
+	   if(actual.derecho!=null && actual.izquierdo!=null){//dd
+								
+		        NodoA temporal=actual.derecho;					
+		        NodoA BuscaExtremo=actual.izquierdo;
+						
+				padre.derecho=actual.izquierdo;
+				
+	           while(BuscaExtremo.derecho!=null){  
+	        	 
+	        	BuscaExtremo=BuscaExtremo.derecho;  
+	           JOptionPane.showMessageDialog(null,"Buscando Extremo derecho del actual izquierda");
+				}  
+						BuscaExtremo.derecho=temporal;
+						actual=null; 
+						
+						return true;
+					 }//dd
+				  
+		}// CUANDO VA BORRAR EN EL LADO DERECHO
+			return true;
+		}// borra
 	/**
 	 * Guarda las agencia en un archivo plano .dat. Utilizando el orden
 	 * PreoOrden
